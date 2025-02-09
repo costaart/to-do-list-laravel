@@ -23,6 +23,7 @@ WORKDIR /var/www
 # Copiar arquivos do Laravel
 COPY . .
 
+RUN chown -R www-data:www-data /var/www
 # Instalar dependências Node.js
 RUN if [ -f package.json ]; then npm install; fi
 
