@@ -7,6 +7,7 @@ services:
     restart: unless-stopped
     volumes:
       - .:/var/www
+    user: "1000:1000"  # Ajuste para o UID e GID do seu usuário no Ubuntu
     networks:
       - laravel
     depends_on:
