@@ -25,7 +25,7 @@
             <div class="container mx-auto" style="display: flex; justify-content: center; align-items: center; height: 100%;">
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <div>
-                        <img src="{{ asset('images/rocket.svg') }}" alt="Descrição da Imagem">
+                        <img src="{{ asset('images/rocket.svg') }}" alt="Logo">
                     </div>
                     <div style="font-family: 'Inter', sans-serif; color: #fff; font-size: 24px; font-weight: 600;">
                         <span style="color: #4EA8DE;font-size: 36px; font-weight: 720">to</span><span style="color: #5E60CE;font-size: 36px;font-weight: 720">do</span>
@@ -36,16 +36,56 @@
 
         <main>
             <div style="display: flex; gap: 15px; margin-top: -45px; justify-content: center;">
-                <input type="text" placeholder="Digite sua tarefa" style="width: 45%;height: 50px; padding: 10px; font-size: 16px; border: none; border-radius: 5px; margin: 20px 0; background-color: #262626; color: #fff;">
-                <button style="height: 50px; padding: 10px; font-size: 16px; border: none; border-radius: 5px; margin: 20px 0; background-color: #1E6F9F; color: #fff;">Adicionar</button>
+                <form action="{{ url('/tasks') }}" method="POST">
+                    <input required type="text" name="task" placeholder="Digite sua tarefa" style="width: 880px;height: 50px; padding: 10px; font-size: 16px; border: none; border-radius: 5px; margin: 20px 0; background-color: #262626; color: #fff;">
+                    <button type="submit" style="height: 50px; padding: 10px; font-size: 16px; border: none; border-radius: 5px; margin: 20px 0; background-color: #1E6F9F; color: #fff;">Adicionar</button>
+                    @csrf 
+                </form>
             </div>
 
             <section style="width: 965px; margin: 0 auto; margin-top: 40px" >
-                <div style="display: flex; gap: 15px; justify-content: space-between;">
-                    <span style="color: #4EA8DE; font-weight: 720">Tarefas criadas</span>
-                    <span style="color: #5E60CE; font-weight: 720">Concluídas</span>
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <!-- Grupo 1: Tarefas Criadas -->
+                    <div style="display: flex; gap: 5px;">
+                        <span style="color: #4EA8DE; font-weight: 720;">Tarefas criadas</span>
+                        <span style="color: white; font-weight: bold; font-size: 14px; background-color: #262626; padding: 3px 8px 3px 8px; border-radius: 15px">{{ $totalTasks }}</span>
+                    </div>
+                
+                    <!-- Grupo 2: Tarefas Concluídas -->
+                    <div style="display: flex; gap: 5px;">
+                        <span style="color: #5E60CE; font-weight: 720;">Concluídas</span>
+                        <span style="color: white; font-weight: bold; font-size: 14px; background-color: #262626; padding: 3px 8px 3px 8px; border-radius: 15px">{{ $totalCompleted }} de {{ $totalTasks }}</span>
+                    </div>
                 </div>
+                
                 <hr style="border-color: #333333; margin-top: 20px">
+            </section>
+
+            <section style="width: 965px; margin: 0 auto; margin-top: 40px"> 
+                @forelse ($tasks as $task)
+                <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; 
+                color: white; height: 50px; padding: 15px 20px; font-size: 16px; 
+                border-radius: 5px; margin: 20px 0; background-color: #262626;">
+        
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <input type="checkbox" name="completed" id="completed" 
+                            style="width: 20px; height: 20px; border-radius: 5px; margin-right: 10px;background-color: transparent"> 
+                        <p style="margin: 0;">{{ $task->task }}</p>
+                    </div>
+                    <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="margin: 0;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" style="border: none; background: none; cursor: pointer;">
+                            <img src="{{ asset('images/trash.svg') }}" alt="Lixeira para deletar tarefa" 
+                                style="width: 30px; height: 30px;">
+                        </button>
+                    </form>
+                </div>
+                    @empty
+                    <p>
+                        Nenhuma task adicionada                  
+                    </p>
+                @endforelse
             </section>
             
         </main>
