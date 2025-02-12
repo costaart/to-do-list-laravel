@@ -1,6 +1,10 @@
-## 📝 To-Do List com Laravel
+## 📝 To-Do List com Laravel 
 
 Este é um projeto simples de To-Do List desenvolvido com Laravel, permitindo cadastrar, visualizar e excluir tarefas em uma única página.
+
+### 🚧 Em Construção
+O projeto ainda está em andamento e novas funcionalidades estão sendo implementadas.
+
 
 #### 🚀  Tecnologias Utilizadas
 
