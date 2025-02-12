@@ -4,22 +4,22 @@ Este é um projeto simples de To-Do List desenvolvido com Laravel, permitindo ca
 
 #### 🚀  Tecnologias Utilizadas
 
-Laravel 11 
-PHP 8 
-MySQL 8 
-Docker e Docker Compose
-Nginx
+- Laravel 11 
+- PHP 8 
+- MySQL 8 
+- Docker e Docker Compose
+- Nginx
 
 ### 📷 Preview do Projeto
 
-![Projeto como esta por enquanto](public\images\screenshots\preview-todo.png)
+![Preview](public/images/screenshots/preview-todo.png)
 
 ### 📌 Funcionalidades
 
-✅ Cadastrar novas tarefas em um formulário na mesma página
-✅ Listar todas as tarefas abaixo do formulário
-✅ Marcar tarefas como concluídas
-✅ Excluir tarefas ao clicar na lixeira
+- ✅ Cadastrar novas tarefas em um formulário na mesma página
+- ✅ Listar todas as tarefas abaixo do formulário
+- ✅ Marcar tarefas como concluídas
+- ✅ Excluir tarefas ao clicar na lixeira
 
 ### 🛠 Endpoints
 
