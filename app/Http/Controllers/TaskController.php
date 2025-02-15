@@ -9,8 +9,8 @@ class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Task::all();
-        $totalTasks = $tasks->count(); 
+        $tasks = Task::paginate(10);
+        $totalTasks = Task::count();
         $totalCompleted = Task::where('completed', true)->count();
 
         return view('tasks', compact('tasks', 'totalTasks', 'totalCompleted'));
@@ -37,4 +37,13 @@ class TaskController extends Controller
 
         return redirect('/');
     }   
+
+    public function update($id)
+    {
+        $task = Task::findOrFail($id);
+        $task->completed = !$task->completed; 
+        $task->save();
+
+        return redirect('/');
+    }
 }
