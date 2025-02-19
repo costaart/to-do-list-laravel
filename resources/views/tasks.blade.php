@@ -31,7 +31,7 @@
         <main>
             <div class="flex gap-8 -mt-10 justify-center">
                 <form action="{{ url('/tasks') }}" method="POST">
-                    <input class="w-[880px] h-[50px] p-5 text-sm border-none rounded-sm my-5 bg-[#262626] text-white" required  maxlength="105" type="text" name="task" placeholder="Digite sua tarefa">
+                    <input class="w-[880px] h-[50px] p-5 text-sm border-none rounded-sm my-5 bg-[#262626] text-white focus:outline-none focus:ring-2 focus:ring-[#5E60CE]" required maxlength="105" type="text" name="task" placeholder="Digite sua tarefa">
                     <button class="h-[50px] p-2 text-sm border-none rounded my-5 bg-[#1E6F9F] text-white" type="submit">Adicionar <i class="fa-solid fa-plus fa-sm"></i></button>
                     @csrf 
                 </form>
