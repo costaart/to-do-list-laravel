@@ -12,8 +12,9 @@ services:
       - laravel
     depends_on:
       - db
-    # Garantir que o Node.js esteja acessível no contêiner
     working_dir: /var/www
+    ports:
+      - "5173:5173" 
 
   db:
     image: mysql:8.0
