@@ -7,14 +7,14 @@ services:
     restart: unless-stopped
     volumes:
       - .:/var/www
-    user: "1000:1000"  # Ajuste para o UID e GID do seu usuário no Ubuntu
+    user: "1000:1000"
     networks:
       - laravel
     depends_on:
       - db
     working_dir: /var/www
     ports:
-      - "5173:5173" 
+      - "5173:5173"
 
   db:
     image: mysql:8.0
@@ -32,6 +32,20 @@ services:
     networks:
       - laravel
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: laravel_phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_USER: user
+      PMA_PASSWORD: secret
+    ports:
+      - "8080:80"
+    networks:
+      - laravel
+    depends_on:
+      - db
   nginx:
     image: nginx:alpine
     container_name: laravel_nginx
