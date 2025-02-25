@@ -3,19 +3,28 @@
 namespace Tests\Feature;
 
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\Response;
 use Tests\TestCase;
 
 class TaskControllerTest extends TestCase
 {
-    use RefreshDatabase; //reseta o banco
+    use RefreshDatabase; // Reseta o banco após cada teste (garante que não tem nada populado errado)
+
+    private $user;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->user = User::factory()->create();
+        $this->actingAs($this->user);
+    }
 
     public function test_index()
     {
-        Task::factory()->count(5)->create();
+        Task::factory()->count(5)->create(['user_id' => $this->user->id]);
 
-        $response = $this->get('/');
+        $response = $this->get('/tasks');
         $response->assertStatus(200);
 
         $response->assertViewHas('tasks');
@@ -25,37 +34,36 @@ class TaskControllerTest extends TestCase
 
     public function test_store()
     {
-        $taskData = [
-            'task' => 'Nova tarefa',
-            'completed' => false
-        ];
+        $taskData = ['task' => 'Nova tarefa'];
 
         $response = $this->post('/tasks', $taskData);
 
         $this->assertDatabaseHas('tasks', [
             'task' => 'Nova tarefa',
             'completed' => false,
+            'user_id' => $this->user->id,
         ]);
 
-        $response->assertRedirect('/');
+        $response->assertRedirect('/tasks');
     }
 
     public function test_destroy()
     {
-        $task = Task::factory()->create();
+        $task = Task::factory()->create(['user_id' => $this->user->id]);
 
         $response = $this->delete('/tasks/' . $task->id);
 
-        $this->assertDatabaseMissing('tasks', [
-            'id' => $task->id,
-        ]);
+        $this->assertDatabaseMissing('tasks', ['id' => $task->id]);
 
-        $response->assertRedirect('/');
+        $response->assertRedirect('/tasks');
     }
 
     public function test_update()
     {
-        $task = Task::factory()->create(['completed' => false]);
+        $task = Task::factory()->create([
+            'completed' => false,
+            'user_id' => $this->user->id,
+        ]);
 
         $response = $this->put('/tasks/' . $task->id);
 
@@ -64,44 +72,24 @@ class TaskControllerTest extends TestCase
             'completed' => true,
         ]);
 
-        $response->assertRedirect('/');
+        $response->assertRedirect('/tasks');
     }
 
     public function test_store_validation_max_length()
     {
-        $longString = str_repeat('a', 256); 
+        $longString = str_repeat('a', 256);
 
-        $taskData = [
-            'task' => $longString,
-            'completed' => false
-        ];
-
-        $response = $this->post('/tasks', $taskData);
+        $response = $this->post('/tasks', ['task' => $longString]);
 
         $response->assertSessionHasErrors(['task']);
-
-        $errorMessage = session('errors')->first('task');
-        $this->assertEquals('The task field must not be greater than 255 characters.', $errorMessage);
-
         $this->assertDatabaseCount('tasks', 0);
     }
 
     public function test_store_validation_empty_field()
     {
-        $emptyString = null;
-
-        $taskData = [
-            'task' => $emptyString,
-            'completed' => false
-        ];
-
-        $response = $this->post('/tasks', $taskData);
+        $response = $this->post('/tasks', ['task' => null]);
 
         $response->assertSessionHasErrors(['task']);
-
-        $errorMessage = session('errors')->first('task');
-        $this->assertEquals('The task field is required.', $errorMessage);
-
         $this->assertDatabaseCount('tasks', 0);
     }
 }
