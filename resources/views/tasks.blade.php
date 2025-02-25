@@ -15,6 +15,14 @@
 
     <body class="min-h-screen w-full bg-[#191919]">
         <header class="h-[200px] w-full bg-[#0D0D0D]">
+            <div class="text-[#5E60CE] font-bold text-sm">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit">
+                        {{ __('Log Out') }}
+                    </button>
+                </form>
+            </div>
             <div class="flex place-content-center h-full">
                 <div class="flex items-center gap-3">
                     <div>
