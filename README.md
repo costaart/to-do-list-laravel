@@ -1,10 +1,6 @@
 ## 📝 To-Do List com Laravel 
 
-Este é um projeto simples de To-Do List desenvolvido com Laravel, permitindo cadastrar, visualizar e excluir tarefas em uma única página.
-
-### 🚧 Em Construção
-O projeto ainda está em andamento e novas funcionalidades estão sendo implementadas.
-
+Este é um projeto simples de To-Do List desenvolvido com Laravel, permitindo cadastrar, visualizar e excluir tarefas em uma única página. O sistema também conta com autenticação de usuários via Laravel Breeze, permitindo login e cadastro de contas.
 
 #### 🚀  Tecnologias Utilizadas
 
@@ -16,7 +12,13 @@ O projeto ainda está em andamento e novas funcionalidades estão sendo implemen
 
 ### 📷 Preview do Projeto
 
-![Preview](public/images/screenshots/preview-todo.png)
+- Quando não há tarefas cadastradas:
+
+![Preview sem Tarefas](public/images/screenshots/preview_sem_tarefas.png)
+
+- Quando há tarefas cadastradas:
+
+![Preview com Tarefas](public/images/screenshots/preview_com_tarefas.png)
 
 ### 📌 Funcionalidades
 
@@ -24,6 +26,7 @@ O projeto ainda está em andamento e novas funcionalidades estão sendo implemen
 - ✅ Listar todas as tarefas abaixo do formulário
 - ✅ Marcar tarefas como concluídas
 - ✅ Excluir tarefas ao clicar na lixeira
+- 🔒 Criar conta e fazer login via Laravel Breeze
 
 ### 🛠 Endpoints
 
